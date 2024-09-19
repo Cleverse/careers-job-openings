@@ -12,7 +12,7 @@ function Header() {
           <div className="jobheadertext">Job</div>
           <div className="jobheadertext red">Openings</div>
         </div>
-        <div className="dropdowndiv">
+        {/* <div className="dropdowndiv">
           <div
             data-hover="false"
             data-delay="0"
@@ -86,7 +86,7 @@ function Header() {
               </a>
             </nav>
           </div>
-        </div>
+        </div> */}
       </div>
     </div>
   );
@@ -123,9 +123,9 @@ function CareerList() {
                     <div id="JobTitle" className="jobtitletext">
                       {item.jobOpeningName}
                     </div>
-                    <div id="Status" className="jobstatustext">
+                    {/* <div id="Status" className="jobstatustext">
                       OPENED
-                    </div>
+                    </div> */}
                   </div>
                   <div className="buttontagdiv">
                     <div className="jobtagdiv">
