@@ -120,9 +120,13 @@ function CareerList() {
               return (
                 <div className="jobopeningdiv" key={item.id}>
                   <div className="titlestatusdiv">
-                    <div id="JobTitle" className="jobtitletext">
+                    <a
+                      href={`https://cleverse.bamboohr.com/careers/${item.id}`}
+                      id="JobTitle"
+                      className="jobtitletext"
+                    >
                       {item.jobOpeningName}
-                    </div>
+                    </a>
                     {/* <div id="Status" className="jobstatustext">
                       OPENED
                     </div> */}

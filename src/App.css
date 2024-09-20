@@ -3101,6 +3101,10 @@ body {
   font-weight: 600;
   line-height: 28px;
   transition: opacity 0.2s;
+  text-decoration: none;
+}
+.jobtitletext:hover {
+  text-decoration: underline;
 }
 
 .jobtitletext:hover {
