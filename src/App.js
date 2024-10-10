@@ -123,6 +123,7 @@ function CareerList() {
                     <a
                       href={`https://cleverse.bamboohr.com/careers/${item.id}`}
                       id="JobTitle"
+                      target="_blank"
                       className="jobtitletext"
                     >
                       {item.jobOpeningName}
@@ -146,6 +147,7 @@ function CareerList() {
                     </div>
                     <a
                       href={`https://cleverse.bamboohr.com/careers/${item.id}`}
+                      target="_blank"
                       className="primarybutton w-button"
                     >
                       Apply
@@ -157,6 +159,7 @@ function CareerList() {
           </div>
           <a
             className="primarybutton outline w-button"
+            target="_blank"
             href="https://cleverse.bamboohr.com/careers/"
           >
             View All
