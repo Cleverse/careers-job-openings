@@ -97,6 +97,10 @@ function CareerList() {
   useEffect(() => {
     fetch(apiURL).then(async (resp) => {
       const result = (await resp.json()).result;
+      result.sort((a, b) => {
+        return ("" + a.jobOpeningName).localeCompare(b.jobOpeningName);
+      });
+
       setCareerList(result);
     });
   }, []);
