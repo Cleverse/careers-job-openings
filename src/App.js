@@ -94,6 +94,14 @@ function Header() {
   );
 }
 
+const addLinkStyleSheetToHTML = () => {
+  const link = document.createElement("link");
+  link.href =
+    "https://raw.githack.com/Cleverse/careers-job-openings/main/build/static/css/main.css?t=1";
+  link.rel = "stylesheet";
+  document.head.appendChild(link);
+};
+
 function CareerList() {
   const [careerList, setCareerList] = useState([]);
   const [expandedIds, setExpandedIds] = useState({});
@@ -233,6 +241,9 @@ function CareerList() {
 }
 
 function App() {
+  useEffect(() => {
+    addLinkStyleSheetToHTML();
+  }, []);
   return (
     <div className="jobopeningsection">
       <Header />
