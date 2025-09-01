@@ -1,5 +1,8 @@
 import { useEffect, useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 import "./App.css";
+import { MdKeyboardArrowDown } from "react-icons/md";
 
 const apiURL = "https://joblisting.cleverse.workers.dev";
 
@@ -93,6 +96,10 @@ function Header() {
 
 function CareerList() {
   const [careerList, setCareerList] = useState([]);
+  const [expandedIds, setExpandedIds] = useState({});
+  const toggleExpanded = (id) => {
+    setExpandedIds((prev) => ({ ...prev, [id]: !prev[id] }));
+  };
   useEffect(() => {
     fetch(apiURL).then(async (resp) => {
       const result = (await resp.json()).records;
@@ -137,23 +144,43 @@ function CareerList() {
 
               const jobOpeningName = item.fields["Job Title"];
               const jobType = item.fields["Job Type"];
+              const jobDescription = item.fields["Job Description"];
               const department = item.fields["Department"];
               const applyLink = `https://airtable.com/appuZxizGN2iGkbtA/paguDX8Ee4lgBWSbz/form?prefill_Applied+Position=${item.id}`;
+              const isExpanded = !!expandedIds[item.id];
               return (
-                <div className="jobopeningdiv" key={encodeId}>
-                  <div className="titlestatusdiv">
-                    <a
-                      href={`https://airtable.com/appuZxizGN2iGkbtA/shr3kXZqLaz3XVt9O?detail=${encodeId}`}
-                      id="JobTitle"
-                      target="_blank"
-                      className="jobtitletext"
-                    >
-                      {jobOpeningName}
-                    </a>
-                    {/* <div id="Status" className="jobstatustext">
-                      OPENED
-                    </div> */}
-                  </div>
+                <div
+                  className="jobopeningdiv"
+                  key={encodeId}
+                  onClick={() => jobDescription && toggleExpanded(item.id)}
+                >
+                  <button
+                    type="button"
+                    className="accordion-header titlestatusdiv"
+                    aria-expanded={isExpanded}
+                    aria-controls={`desc-${item.id}`}
+                  >
+                    <span className="jobtitlewrap">
+                      <a
+                        // href={`https://airtable.com/appuZxizGN2iGkbtA/shr3kXZqLaz3XVt9O?detail=${encodeId}`}
+                        // onClick={(e) => e.stopPropagation()}
+                        id="JobTitle"
+                        target="_blank"
+                        rel="noreferrer"
+                        className="jobtitletext"
+                      >
+                        {jobOpeningName}
+                      </a>
+                    </span>
+                    {jobDescription ? (
+                      <span
+                        className={`chevron ${isExpanded ? "open" : ""}`}
+                        aria-hidden="true"
+                      >
+                        <MdKeyboardArrowDown size={24} />
+                      </span>
+                    ) : null}
+                  </button>
                   <div className="buttontagdiv">
                     <div className="jobtagdiv">
                       <div className="employmenttypetagdiv">
@@ -170,11 +197,23 @@ function CareerList() {
                     <a
                       href={applyLink}
                       target="_blank"
+                      rel="noreferrer"
                       className="primarybutton w-button"
                     >
                       Apply
                     </a>
                   </div>
+                  {isExpanded && jobDescription ? (
+                    <div
+                      id={`desc-${item.id}`}
+                      className="jobdescription accordion-panel"
+                      style={{ marginTop: "12px" }}
+                    >
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {jobDescription}
+                      </ReactMarkdown>
+                    </div>
+                  ) : null}
                 </div>
               );
             })}
@@ -182,6 +221,7 @@ function CareerList() {
           <a
             className="primarybutton outline w-button"
             target="_blank"
+            rel="noreferrer"
             href="https://airtable.com/appuZxizGN2iGkbtA/shr3kXZqLaz3XVt9O"
           >
             View All
