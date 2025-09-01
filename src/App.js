@@ -1,8 +1,7 @@
 import { useEffect, useState } from "react";
 import "./App.css";
 
-const apiURL =
-  "https://cors-proxy.cleverse.workers.dev/https://cleverse.bamboohr.com/careers/list";
+const apiURL = "https://joblisting.cleverse.workers.dev";
 
 function Header() {
   return (
@@ -96,9 +95,11 @@ function CareerList() {
   const [careerList, setCareerList] = useState([]);
   useEffect(() => {
     fetch(apiURL).then(async (resp) => {
-      const result = (await resp.json()).result;
+      const result = (await resp.json()).records;
       result.sort((a, b) => {
-        return ("" + a.jobOpeningName).localeCompare(b.jobOpeningName);
+        return ("" + a.fields["Job Title"]).localeCompare(
+          b.fields["Job Title"]
+        );
       });
 
       setCareerList(result);
@@ -121,16 +122,33 @@ function CareerList() {
         <div className="openinglistbuttondiv">
           <div className="openinglistdiv">
             {careerList.map((item) => {
+              const encodeId = btoa(
+                JSON.stringify({
+                  pageId: "pagTgxt8p4TnsVNyA",
+                  rowId: item.id,
+                  showComments: false,
+                  queryOriginHint: {
+                    type: "pageElement",
+                    elementId: "pelp28rGmCehnLr5z",
+                    queryContainerId: "pelkxpDwTJHHCYiKL",
+                  },
+                })
+              );
+
+              const jobOpeningName = item.fields["Job Title"];
+              const jobType = item.fields["Job Type"];
+              const department = item.fields["Department"];
+              const applyLink = `https://airtable.com/appuZxizGN2iGkbtA/paguDX8Ee4lgBWSbz/form?prefill_Applied+Position=${item.id}`;
               return (
-                <div className="jobopeningdiv" key={item.id}>
+                <div className="jobopeningdiv" key={encodeId}>
                   <div className="titlestatusdiv">
                     <a
-                      href={`https://cleverse.bamboohr.com/careers/${item.id}`}
+                      href={`https://airtable.com/appuZxizGN2iGkbtA/shr3kXZqLaz3XVt9O?detail=${encodeId}`}
                       id="JobTitle"
                       target="_blank"
                       className="jobtitletext"
                     >
-                      {item.jobOpeningName}
+                      {jobOpeningName}
                     </a>
                     {/* <div id="Status" className="jobstatustext">
                       OPENED
@@ -140,17 +158,17 @@ function CareerList() {
                     <div className="jobtagdiv">
                       <div className="employmenttypetagdiv">
                         <div id="EmploymentType" className="employmenttext">
-                          {item.employmentStatusLabel}
+                          {jobType}
                         </div>
                       </div>
                       <div className="teamtagdiv">
                         <div id="Team" className="teamtext">
-                          {item.departmentLabel}
+                          {department}
                         </div>
                       </div>
                     </div>
                     <a
-                      href={`https://cleverse.bamboohr.com/careers/${item.id}`}
+                      href={applyLink}
                       target="_blank"
                       className="primarybutton w-button"
                     >
@@ -164,7 +182,7 @@ function CareerList() {
           <a
             className="primarybutton outline w-button"
             target="_blank"
-            href="https://cleverse.bamboohr.com/careers/"
+            href="https://airtable.com/appuZxizGN2iGkbtA/shr3kXZqLaz3XVt9O"
           >
             View All
           </a>
