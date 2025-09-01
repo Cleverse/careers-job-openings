@@ -131,36 +131,64 @@ module.exports = function (webpackEnv) {
             // https://github.com/facebook/create-react-app/issues/2677
             ident: "postcss",
             config: false,
-            plugins: !useTailwind
-              ? [
-                  "postcss-flexbugs-fixes",
-                  [
-                    "postcss-preset-env",
-                    {
-                      autoprefixer: {
-                        flexbox: "no-2009",
+            plugins: (() => {
+              const plugins = !useTailwind
+                ? [
+                    "postcss-flexbugs-fixes",
+                    [
+                      "postcss-preset-env",
+                      {
+                        autoprefixer: {
+                          flexbox: "no-2009",
+                        },
+                        stage: 3,
                       },
-                      stage: 3,
-                    },
-                  ],
-                  // Adds PostCSS Normalize as the reset css with default options,
-                  // so that it honors browserslist config in package.json
-                  // which in turn let's users customize the target behavior as per their needs.
-                  "postcss-normalize",
-                ]
-              : [
-                  "tailwindcss",
-                  "postcss-flexbugs-fixes",
-                  [
-                    "postcss-preset-env",
-                    {
-                      autoprefixer: {
-                        flexbox: "no-2009",
+                    ],
+                    // Adds PostCSS Normalize as the reset css with default options,
+                    // so that it honors browserslist config in package.json
+                    // which in turn let's users customize the target behavior as per their needs.
+                    "postcss-normalize",
+                  ]
+                : [
+                    "tailwindcss",
+                    "postcss-flexbugs-fixes",
+                    [
+                      "postcss-preset-env",
+                      {
+                        autoprefixer: {
+                          flexbox: "no-2009",
+                        },
+                        stage: 3,
                       },
-                      stage: 3,
+                    ],
+                  ];
+
+              if (isEnvProduction) {
+                const PurgeCSSModule = require("@fullhuman/postcss-purgecss");
+                const purgecssPluginFactory =
+                  (PurgeCSSModule && PurgeCSSModule.default) || PurgeCSSModule;
+                plugins.push(
+                  purgecssPluginFactory({
+                    content: [
+                      paths.appHtml,
+                      path.join(
+                        paths.appSrc,
+                        "**/*.{js,jsx,ts,tsx,html,md,mdx}"
+                      ),
+                    ],
+                    defaultExtractor: (content) =>
+                      content.match(/[\w-/:]+(?<!:)/g) || [],
+                    safelist: {
+                      standard: [/^w-/, /^w-icon-/, /^w-.*$/],
+                      keyframes: [],
+                      variables: [],
                     },
-                  ],
-                ],
+                  })
+                );
+              }
+
+              return plugins;
+            })(),
           },
           sourceMap: isEnvProduction ? shouldUseSourceMap : isEnvDevelopment,
         },
