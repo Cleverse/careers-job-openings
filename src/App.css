@@ -3131,19 +3131,7 @@ body {
 }
 
 .primarybutton {
-  display: block !important;
   text-align: center;
-}
-@media screen and (min-width: 768px) {
-  .mobile-only {
-    display: none !important;
-  }
-}
-
-@media screen and (max-width: 767px) {
-  .desktop-only {
-    display: none !important;
-  }
 }
 
 .primarybutton {

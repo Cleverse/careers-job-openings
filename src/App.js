@@ -105,6 +105,7 @@ const addLinkStyleSheetToHTML = () => {
 function CareerList() {
   const [careerList, setCareerList] = useState([]);
   const [expandedIds, setExpandedIds] = useState({});
+  const isDesktop = window.innerWidth > 768;
   const toggleExpanded = (id) => {
     setExpandedIds((prev) => ({ ...prev, [id]: !prev[id] }));
   };
@@ -206,7 +207,10 @@ function CareerList() {
                       href={applyLink}
                       target="_blank"
                       rel="noreferrer"
-                      className="primarybutton w-button desktop-only"
+                      className="primarybutton w-button"
+                      style={{
+                        display: isDesktop ? "block" : "none",
+                      }}
                     >
                       Apply
                     </a>
@@ -226,7 +230,10 @@ function CareerList() {
                           target="_blank"
                           rel="noreferrer"
                           className="primarybutton w-button"
-                          style={{ margin: "20px auto 0" }}
+                          style={{
+                            margin: "20px auto 0",
+                            display: isDesktop ? "none" : "block",
+                          }}
                         >
                           Apply
                         </a>
