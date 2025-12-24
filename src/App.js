@@ -206,7 +206,7 @@ function CareerList() {
                       href={applyLink}
                       target="_blank"
                       rel="noreferrer"
-                      className="primarybutton w-button"
+                      className="primarybutton w-button desktop-only"
                     >
                       Apply
                     </a>
@@ -220,6 +220,17 @@ function CareerList() {
                       <ReactMarkdown remarkPlugins={[remarkGfm]}>
                         {jobDescription}
                       </ReactMarkdown>
+                      <div className="mobile-only">
+                        <a
+                          href={applyLink}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="primarybutton w-button"
+                          style={{ margin: "20px auto 0" }}
+                        >
+                          Apply
+                        </a>
+                      </div>
                     </div>
                   ) : null}
                 </div>

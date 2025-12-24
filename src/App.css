@@ -3131,6 +3131,22 @@ body {
 }
 
 .primarybutton {
+  display: block !important;
+  text-align: center;
+}
+@media screen and (min-width: 768px) {
+  .mobile-only {
+    display: none !important;
+  }
+}
+
+@media screen and (max-width: 767px) {
+  .desktop-only {
+    display: none !important;
+  }
+}
+
+.primarybutton {
   background-color: var(--red--100);
   font-family: var(--font-formal);
   color: var(--white);
@@ -4255,10 +4271,6 @@ body {
 
   .jobtitletext {
     font-size: 18px;
-  }
-
-  .primarybutton {
-    display: none;
   }
 
   .teamclipdiv {
