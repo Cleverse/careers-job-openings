@@ -29,7 +29,10 @@ const ReactRefreshWebpackPlugin = require("@pmmmwh/react-refresh-webpack-plugin"
 const createEnvironmentHash = require("./webpack/persistentCache/createEnvironmentHash");
 
 // Source maps are resource heavy and can cause out of memory issue for large source files.
-const shouldUseSourceMap = process.env.GENERATE_SOURCEMAP !== "false";
+// We disable them entirely in production builds so that no .map files are emitted in /build.
+const isProdEnv = process.env.NODE_ENV === "production";
+const shouldUseSourceMap =
+  !isProdEnv && process.env.GENERATE_SOURCEMAP !== "false";
 
 const reactRefreshRuntimeEntry = require.resolve("react-refresh/runtime");
 const reactRefreshWebpackPluginRuntimeEntry = require.resolve(

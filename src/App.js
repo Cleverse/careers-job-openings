@@ -210,6 +210,7 @@ function CareerList() {
                       className="primarybutton w-button"
                       style={{
                         display: isDesktop ? "block" : "none",
+                        textAlign: "center",
                       }}
                     >
                       Apply
@@ -232,6 +233,7 @@ function CareerList() {
                           className="primarybutton w-button"
                           style={{
                             margin: "20px auto 0",
+                            textAlign: "center",
                             display: isDesktop ? "none" : "block",
                           }}
                         >
