@@ -251,6 +251,71 @@
   padding-top: 12px;
 }
 
+/* Job description (markdown) — cohesive type scale so headers and body
+   share one family, weight rhythm, and line-height. */
+.jobdescription {
+  font-family: var(--font-formal, -apple-system, BlinkMacSystemFont, "Segoe UI",
+      Roboto, "Helvetica Neue", Arial, sans-serif);
+  color: var(--black);
+  font-size: 16px;
+  line-height: 1.7;
+}
+
+.jobdescription h1,
+.jobdescription h2,
+.jobdescription h3,
+.jobdescription h4,
+.jobdescription h5,
+.jobdescription h6,
+.jobdescription p,
+.jobdescription ul,
+.jobdescription ol,
+.jobdescription li,
+.jobdescription strong {
+  font-family: inherit;
+}
+
+.jobdescription h1,
+.jobdescription h2,
+.jobdescription h3,
+.jobdescription h4 {
+  color: var(--black);
+  font-weight: 600;
+  line-height: 1.3;
+  margin: 1.5em 0 0.5em;
+}
+
+.jobdescription h1 { font-size: 26px; }
+.jobdescription h2 { font-size: 22px; }
+.jobdescription h3 { font-size: 18px; }
+.jobdescription h4 { font-size: 16px; }
+
+.jobdescription > :first-child {
+  margin-top: 0;
+}
+
+.jobdescription p {
+  margin: 0 0 16px;
+}
+
+.jobdescription ul,
+.jobdescription ol {
+  margin: 0 0 16px;
+  padding-left: 22px;
+}
+
+.jobdescription li {
+  margin-bottom: 8px;
+}
+
+.jobdescription li:last-child {
+  margin-bottom: 0;
+}
+
+.jobdescription strong {
+  font-weight: 600;
+}
+
 .openinglistdiv {
   grid-column-gap: 16px;
   grid-row-gap: 16px;
